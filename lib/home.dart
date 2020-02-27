@@ -1,3 +1,4 @@
+import 'package:clone_youtube/customSearchDelegate.dart';
 import 'package:clone_youtube/telas/biblioteca.dart';
 import 'package:clone_youtube/telas/emalta.dart';
 import 'package:clone_youtube/telas/inicio.dart';
@@ -13,11 +14,15 @@ class Home extends StatefulWidget {
 
 class _HomeState extends State<Home> {
   int _indiceAtual = 0;
-
+  String _pesquisa = '';
+  
   @override
   Widget build(BuildContext context) {
+
+    
+
     List<Widget> telas = [
-      Inicio(),
+      Inicio(_pesquisa),
       EmAlta(),
       Biblioteca(),
       Inscricao(),
@@ -25,34 +30,43 @@ class _HomeState extends State<Home> {
 
     return Scaffold(
       appBar: AppBar(
-        backgroundColor: Colors.white,
+        //backgroundColor: Colors.white,
         iconTheme: IconThemeData(
-          color: Colors.grey,
+          //color: Colors.grey,
         ),
         title: Image.asset(
-          'img/youtube.png',
+          'img/youtube2.png',
           width: 98,
           height: 22,
         ),
         actions: <Widget>[
-          IconButton(
-            icon: Icon(Icons.videocam),
-            onPressed: () {
-              print('videocam');
-            },
-          ),
+          // IconButton(
+          //   icon: Icon(Icons.videocam),
+          //   onPressed: () {
+          //     print('videocam');
+          //   },
+          // ),
+          // IconButton(
+          //   icon: Icon(Icons.account_circle),
+          //   onPressed: () {
+          //     print('conta');
+          //   },
+          // ),
+
           IconButton(
             icon: Icon(Icons.search),
-            onPressed: () {
-              print('pesquisar');
+            onPressed: () async{
+              String res =  await showSearch(
+                context: context, 
+                delegate: CustomSearchDelegate());
+                setState(() {
+                  _pesquisa = res;
+                });
             },
+
           ),
-          IconButton(
-            icon: Icon(Icons.account_circle),
-            onPressed: () {
-              print('conta');
-            },
-          ),
+
+
         ],
       ),
       body: Container(
@@ -65,10 +79,11 @@ class _HomeState extends State<Home> {
           setState(() {
             _indiceAtual = indice;
             print(indice);
+            _pesquisa = '';
           });
         },
         type: BottomNavigationBarType.fixed,
-        fixedColor: Colors.red,
+        //fixedColor: Colors.red,
         items: [
           BottomNavigationBarItem(
             title: Text('Início'),
@@ -87,7 +102,6 @@ class _HomeState extends State<Home> {
             icon: Icon(Icons.library_add),
           ),
         ],
-        
       ),
     );
   }

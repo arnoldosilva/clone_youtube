@@ -5,6 +5,8 @@ main(List<String> args) {
   runApp(
     MaterialApp(
       home: Home(),
-    ),
+      theme: ThemeData.dark(),
+      debugShowCheckedModeBanner: false,
+    )
   );
 }
